@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Base64;
 import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.ma.json.JsonHandlerMap;
@@ -67,8 +68,16 @@ public class EvalResultConverter {
             if (evalResult.getType().equals(EvalResult.Type.BASE64BINARY)) {
                 return new XdmAtomicValue(evalResult.getString(), ItemType.BASE64_BINARY);
             }
+            if (evalResult.getType().equals(EvalResult.Type.BINARY)) {
+                
+                byte[] r = evalResult.getAs(byte[].class);
+                
+                String e = Base64.getEncoder().encodeToString(r);
+                return new XdmAtomicValue(e, ItemType.BASE64_BINARY);
+            }
             if (evalResult.getType().equals(EvalResult.Type.BOOLEAN)) {
-                return new XdmAtomicValue(evalResult.getBoolean());
+                XdmAtomicValue r = new XdmAtomicValue(evalResult.getBoolean());
+                return r;
             }
             if (evalResult.getType().equals(EvalResult.Type.DATE)) {
                 return new XdmAtomicValue(evalResult.getString(), ItemType.DATE);
@@ -114,7 +123,8 @@ public class EvalResultConverter {
                 return new XdmAtomicValue(new QName("", evalResult.getString()));
             }
             if (evalResult.getType().equals(EvalResult.Type.STRING)) {
-                return new XdmAtomicValue(evalResult.getString());
+                XdmAtomicValue r = new XdmAtomicValue(evalResult.getString());
+                return r;
             }
             if (evalResult.getType().equals(EvalResult.Type.TIME)) {
                 return new XdmAtomicValue(evalResult.getString(), ItemType.TIME);
