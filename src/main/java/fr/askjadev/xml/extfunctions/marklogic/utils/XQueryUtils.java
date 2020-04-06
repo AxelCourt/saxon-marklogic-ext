@@ -36,11 +36,12 @@ import net.sf.saxon.trans.XPathException;
 
 /**
  * Utility methods / XQuery input
+ *
  * @author Axel Court
  */
 public class XQueryUtils {
 
-	public static InputStreamHandle getXQueryFromURI(XPathContext xpc, String queryUri, String staticBaseUri) throws XPathException {
+    public static InputStreamHandle getXQueryFromURI(XPathContext xpc, String queryUri, String staticBaseUri) throws XPathException {
         try {
             // Logger.getLogger(AbstractMLExtensionFunction.class.getName()).log(Level.INFO, queryUri);
             // Resolve the XQuery URI if it is relative
@@ -60,5 +61,5 @@ public class XQueryUtils {
             throw new XPathException("Error while trying to load the XQuery file: " + queryUri + "; see: " + ex.getMessage());
         }
     }
-	
+
 }

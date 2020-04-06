@@ -58,7 +58,6 @@ public class MarkLogicSequenceIterator implements SequenceIterator, AutoCloseabl
         this.xpathContext = xpc;
         this.session = null;
         this.resultCount = 0;
-
     }
 
     public MarkLogicSequenceIterator(EvalResultIterator result, DocumentBuilder builder, XPathContext xpc, DatabaseClient session) {
@@ -84,7 +83,8 @@ public class MarkLogicSequenceIterator implements SequenceIterator, AutoCloseabl
             Item item = xdmValue.getUnderlyingValue().head();
             // Logger.getLogger(AbstractMLExtensionFunction.class.getName()).log(Level.INFO, Type.displayTypeName(item));
             return item;
-        } else {
+        }
+        else {
             close();
             return null;
         }
@@ -103,7 +103,8 @@ public class MarkLogicSequenceIterator implements SequenceIterator, AutoCloseabl
             if (session != null) {
                 session.release();
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             Logger.getLogger(AbstractMLExtensionFunction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

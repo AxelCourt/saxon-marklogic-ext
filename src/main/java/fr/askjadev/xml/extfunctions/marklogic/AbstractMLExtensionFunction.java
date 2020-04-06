@@ -118,7 +118,7 @@ public abstract class AbstractMLExtensionFunction extends ExtensionFunctionDefin
                     }
                     if (args.length == 3) {
                     	try {
-                    		call = DatabaseUtils.addExternalVariables(call, xpc, proc, (HashTrieMap) args[2].head());
+                            call = DatabaseUtils.addExternalVariables(call, xpc, proc, (HashTrieMap) args[2].head());
                     	}
                     	catch (ClassCastException ex) {
                             throw new XPathException("The 3d argument must be an XPath 3.0 map defining the query external variables.");

@@ -69,9 +69,7 @@ public class EvalResultConverter {
                 return new XdmAtomicValue(evalResult.getString(), ItemType.BASE64_BINARY);
             }
             if (evalResult.getType().equals(EvalResult.Type.BINARY)) {
-                
                 byte[] r = evalResult.getAs(byte[].class);
-                
                 String e = Base64.getEncoder().encodeToString(r);
                 return new XdmAtomicValue(e, ItemType.BASE64_BINARY);
             }

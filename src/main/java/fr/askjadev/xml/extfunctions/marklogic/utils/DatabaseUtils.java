@@ -44,11 +44,12 @@ import net.sf.saxon.trans.XPathException;
 
 /**
  * Utility methods / Database manipulation
+ *
  * @author Axel Court
  */
 public class DatabaseUtils {
-	
-	public static DatabaseClient createMarkLogicClient(QueryConfiguration config) {
+
+    public static DatabaseClient createMarkLogicClient(QueryConfiguration config) {
         DatabaseClientFactory.SecurityContext authContext;
         switch (config.getAuthentication()) {
             case "digest":
@@ -60,16 +61,17 @@ public class DatabaseUtils {
         // Init session
         return makeNewClient(config.getServer(), config.getPort(), config.getDatabase(), authContext);
     }
-	
-	public static DatabaseClient makeNewClient(String server, Integer port, String database, SecurityContext authContext) {
-		if (!(database == null)) {
+
+    public static DatabaseClient makeNewClient(String server, Integer port, String database, SecurityContext authContext) {
+        if (!(database == null)) {
             return DatabaseClientFactory.newClient(server, port, database, authContext);
-        } else {
-        	return DatabaseClientFactory.newClient(server, port, authContext);
         }
-	}
-	
-	public static ServerEvaluationCall addExternalVariables(ServerEvaluationCall call, XPathContext xpc, Processor proc, HashTrieMap variableMap) throws XPathException {
+        else {
+            return DatabaseClientFactory.newClient(server, port, authContext);
+        }
+    }
+
+    public static ServerEvaluationCall addExternalVariables(ServerEvaluationCall call, XPathContext xpc, Processor proc, HashTrieMap variableMap) throws XPathException {
         QueryExternalVarFactory varFactory = new QueryExternalVarFactory(proc, xpc);
         ArrayList<QueryExternalVar> externalVars = varFactory.getExternalVariables(variableMap);
         Iterator<QueryExternalVar> it = externalVars.iterator();
@@ -79,9 +81,9 @@ public class DatabaseUtils {
         }
         return call;
     }
-	
-	public static LazySequence getQueryResult(ServerEvaluationCall call, DocumentBuilder builder, XPathContext xpc) {
-    	EvalResultIterator result = call.eval();
+
+    public static LazySequence getQueryResult(ServerEvaluationCall call, DocumentBuilder builder, XPathContext xpc) {
+        EvalResultIterator result = call.eval();
         MarkLogicSequenceIterator it = new MarkLogicSequenceIterator(result, builder, xpc);
         return new LazySequence(it);
     }

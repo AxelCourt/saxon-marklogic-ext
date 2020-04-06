@@ -39,8 +39,10 @@ import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.trans.XPathException;
 
 /**
- * Reflexive extension function to establish a connection and send queries to a MarkLogic instance.
- * It is a simplification of the main integrated extension functions.
+ * Reflexive extension function to establish a connection and send queries to a
+ * MarkLogic instance. It is a simplification of the main integrated extension
+ * functions.
+ *
  * @author Marc Messéant
  */
 public class SimpleMarkLogicConnection {
@@ -55,54 +57,52 @@ public class SimpleMarkLogicConnection {
         return dataBaseConnection;
     }
 
-    
     // Read the XQuery code from a file and execute it
     static public LazySequence markLogicQueryUri(XPathContext xpc, SimpleMarkLogicConnection connection, String uri, String staticBaseUri) throws IOException, XPathException {
         return markLogicQueryUri(xpc, connection, uri, staticBaseUri, null);
     }
 
     static public LazySequence markLogicQueryUri(XPathContext xpc, SimpleMarkLogicConnection connection, String uri, String staticBaseUri, Sequence[] extVars) throws IOException, XPathException {
-    	Processor proc = new Processor(xpc.getConfiguration());
+        Processor proc = new Processor(xpc.getConfiguration());
         DocumentBuilder builder = proc.newDocumentBuilder();
         InputStreamHandle xquery = XQueryUtils.getXQueryFromURI(xpc, uri, staticBaseUri);
-    	ServerEvaluationCall call = getServerEvaluationCall(xpc, proc, connection, staticBaseUri, extVars);
+        ServerEvaluationCall call = getServerEvaluationCall(xpc, proc, connection, staticBaseUri, extVars);
         call.xquery(xquery);
         xquery.close();
         return DatabaseUtils.getQueryResult(call, builder, xpc);
     }
-    
+
     // The XQuery content is directly supplied
     static public LazySequence markLogicQuery(XPathContext xpc, SimpleMarkLogicConnection connection, String xquery, String staticBaseUri) throws IOException, XPathException {
         return markLogicQuery(xpc, connection, xquery, staticBaseUri, null);
     }
 
     static public LazySequence markLogicQuery(XPathContext xpc, SimpleMarkLogicConnection connection, String xquery, String staticBaseUri, Sequence[] extVars) throws IOException, XPathException {
-    	Processor proc = new Processor(xpc.getConfiguration());
+        Processor proc = new Processor(xpc.getConfiguration());
         DocumentBuilder builder = proc.newDocumentBuilder();
         ServerEvaluationCall call = getServerEvaluationCall(xpc, proc, connection, staticBaseUri, extVars);
         call.xquery(xquery);
         return DatabaseUtils.getQueryResult(call, builder, xpc);
     }
-    
+
     // Invoke an XQuery module
     static public LazySequence markLogicQueryInvoke(XPathContext xpc, SimpleMarkLogicConnection connection, String path, String staticBaseUri) throws IOException, XPathException {
         return markLogicQueryInvoke(xpc, connection, path, staticBaseUri, null);
     }
 
     static public LazySequence markLogicQueryInvoke(XPathContext xpc, SimpleMarkLogicConnection connection, String path, String staticBaseUri, Sequence[] extVars) throws IOException, XPathException {
-    	Processor proc = new Processor(xpc.getConfiguration());
+        Processor proc = new Processor(xpc.getConfiguration());
         DocumentBuilder builder = proc.newDocumentBuilder();
         ServerEvaluationCall call = getServerEvaluationCall(xpc, proc, connection, staticBaseUri, extVars);
         call.modulePath(path);
         return DatabaseUtils.getQueryResult(call, builder, xpc);
     }
-    
-    
+
     private static ServerEvaluationCall getServerEvaluationCall(XPathContext xpc, Processor proc, SimpleMarkLogicConnection connection, String staticBaseUri, Sequence[] extVars) throws XPathException {
-    	DatabaseClient session = connection.getConnection().getDatabaseClient();
+        DatabaseClient session = connection.getConnection().getDatabaseClient();
         ServerEvaluationCall call = session.newServerEval();
         if (extVars != null) {
-        	call = DatabaseUtils.addExternalVariables(call, xpc, proc, (HashTrieMap) extVars[0].head());
+            call = DatabaseUtils.addExternalVariables(call, xpc, proc, (HashTrieMap) extVars[0].head());
         }
         return call;
     }
@@ -111,7 +111,7 @@ public class SimpleMarkLogicConnection {
         DatabaseClient session = connection.getConnection().getDatabaseClient();
         session.release();
     }
-    
+
     private class Connection {
 
         private DatabaseClient client;
@@ -123,7 +123,7 @@ public class SimpleMarkLogicConnection {
         public DatabaseClient getDatabaseClient() {
             return client;
         }
-        
+
     }
 
 }
