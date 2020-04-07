@@ -31,6 +31,7 @@ import com.marklogic.client.DatabaseClientFactory;
 import com.marklogic.client.DatabaseClientFactory.SecurityContext;
 import com.marklogic.client.eval.EvalResultIterator;
 import com.marklogic.client.eval.ServerEvaluationCall;
+import fr.askjadev.xml.extfunctions.marklogic.config.OkHttpClientProxyConfigurator;
 import fr.askjadev.xml.extfunctions.marklogic.config.QueryConfiguration;
 import fr.askjadev.xml.extfunctions.marklogic.result.MarkLogicSequenceIterator;
 import fr.askjadev.xml.extfunctions.marklogic.var.QueryExternalVar;
@@ -58,6 +59,8 @@ public class DatabaseUtils {
             default:
                 authContext = new DatabaseClientFactory.BasicAuthContext(config.getUser(), config.getPassword());
         }
+        // Provide system defined proxies to the DatabaseClientFactory
+        DatabaseClientFactory.addConfigurator(new OkHttpClientProxyConfigurator());
         // Init session
         return makeNewClient(config.getServer(), config.getPort(), config.getDatabase(), authContext);
     }
