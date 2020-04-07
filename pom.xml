@@ -4,7 +4,7 @@
   
   <groupId>fr.askjadev.xml.extfunctions</groupId>
   <artifactId>marklogic</artifactId>
-  <version>1.2-RC3</version>
+  <version>1.2-RC4</version>
   <packaging>jar</packaging>
 
   <name>Marklogic extension functions</name>
