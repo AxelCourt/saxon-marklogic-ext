@@ -4,7 +4,7 @@
   
   <groupId>fr.askjadev.xml.extfunctions</groupId>
   <artifactId>marklogic</artifactId>
-  <version>1.2-RC4</version>
+  <version>1.2.0</version>
   <packaging>jar</packaging>
 
   <name>Marklogic extension functions</name>
@@ -60,6 +60,12 @@
       <groupId>com.marklogic</groupId>
       <artifactId>marklogic-client-api</artifactId>
       <version>4.2.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.squareup.okhttp3</groupId>
+          <artifactId>okhttp</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -74,7 +80,7 @@
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
-      <version>4.5.0</version>
+      <version>3.10.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
