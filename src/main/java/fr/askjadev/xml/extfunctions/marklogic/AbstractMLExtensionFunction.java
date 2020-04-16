@@ -28,6 +28,7 @@ import fr.askjadev.xml.extfunctions.marklogic.utils.XQueryUtils;
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.FailedRequestException;
 import com.marklogic.client.ForbiddenUserException;
+import com.marklogic.client.MarkLogicIOException;
 import com.marklogic.client.eval.ServerEvaluationCall;
 import com.marklogic.client.io.InputStreamHandle;
 import fr.askjadev.xml.extfunctions.marklogic.config.QueryConfiguration;
@@ -126,7 +127,7 @@ public abstract class AbstractMLExtensionFunction extends ExtensionFunctionDefin
                     }
                     return DatabaseUtils.getQueryResult(call, builder, xpc);
                 }
-                catch (FailedRequestException | ForbiddenUserException ex) {
+                catch (FailedRequestException | ForbiddenUserException | MarkLogicIOException ex) {
                     throw new XPathException(ex);
                 }
             }
