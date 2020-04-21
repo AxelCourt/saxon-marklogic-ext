@@ -13,7 +13,9 @@ They are also <a href=https://github.com/cmarchand/gaulois-pipe>gaulois-pipe</a>
 
 
 The project is officially built around *Saxon 9* (HE/PE/EE) from <a href=http://www.saxonica.com>Saxonica</a> and XPath / XSLT 3.0.
+
 Starting with version **1.3.0**, both *Saxon 9.9* and *Saxon 9.8* are supported.
+
 Starting with version **1.1.0**, *Saxon 9.7* is no longer supported (last compatible release: **1.0.7-97**).
 
 
