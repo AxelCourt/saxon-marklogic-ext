@@ -31,7 +31,6 @@ import com.marklogic.client.io.StringHandle;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.xml.bind.DatatypeConverter;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.ma.arrays.ArrayItem;
@@ -43,17 +42,18 @@ import net.sf.saxon.ma.map.MapType;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.pattern.NodeKindTest;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmValue;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.AtomicIterator;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
 import net.sf.saxon.type.TypeHierarchy;
+import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.Base64BinaryValue;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.HexBinaryValue;
@@ -121,9 +121,14 @@ public class QueryExternalVarFactory {
     public ArrayList<QueryExternalVar> getExternalVariables(HashTrieMap variableMap) throws XPathException {
         ArrayList<QueryExternalVar> externalVariables = new ArrayList<>();
        	if (variableMap != null) {
-            Iterator<KeyValuePair> iterator = variableMap.iterator();
-            while (iterator.hasNext()) {
-                KeyValuePair kv = iterator.next();
+            // Saxon 9.9 compatible code, use it once 9.8 support is dropped
+            // Iterator<KeyValuePair> iterator = variableMap.keyValuePairs().iterator();
+            // while (iterator.hasNext()) {
+            // KeyValuePair kv = iterator.next();
+            AtomicIterator iterator = variableMap.keys();
+            AtomicValue key;
+            while ((key = iterator.next()) != null) {
+                KeyValuePair kv = variableMap.getKeyValuePair(key);
                 try {
                     QualifiedNameValue variableQName = (QualifiedNameValue) kv.key;
                     QueryExternalVar variable = new QueryExternalVar(
@@ -231,18 +236,18 @@ public class QueryExternalVarFactory {
     private Object castNodeValue(Item initialValue, ItemType initialValueType) throws XPathException {
         NodeInfo nodeValue = (NodeInfo) initialValue;
         XdmNode node = new XdmNode(nodeValue);
-        if (NodeKindTest.ELEMENT.matchesNode(nodeValue)                 ||
-            NodeKindTest.DOCUMENT.matchesNode(nodeValue)                ||
-            NodeKindTest.COMMENT.matchesNode(nodeValue)                 ||
-            NodeKindTest.PROCESSING_INSTRUCTION.matchesNode(nodeValue)) {
+        if (nodeValue.getNodeKind() == Type.ELEMENT                 ||
+            nodeValue.getNodeKind() == Type.DOCUMENT                ||
+            nodeValue.getNodeKind() == Type.COMMENT                 ||
+            nodeValue.getNodeKind() == Type.PROCESSING_INSTRUCTION) {
             // Basic string serialization
             return node.toString();
         }
         // Wrap an attribute node around a dummy element
-        if (NodeKindTest.ATTRIBUTE.matchesNode(nodeValue)) {
+        if (nodeValue.getNodeKind() == Type.ATTRIBUTE) {
             return "<mkl-ext:dummy-element xmlns:mkl-ext=" + '"' + "fr:askjadev:xml:extfunctions" + '"' + " " + node.toString() + "/>";
         }
-        if (NodeKindTest.TEXT.matchesNode(nodeValue)) {
+        if (nodeValue.getNodeKind() == Type.TEXT) {
             return new StringHandle(node.toString()).withFormat(Format.TEXT);
         }
         return null;

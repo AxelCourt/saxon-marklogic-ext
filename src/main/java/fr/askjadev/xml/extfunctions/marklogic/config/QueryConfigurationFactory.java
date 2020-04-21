@@ -23,11 +23,12 @@
  */
 package fr.askjadev.xml.extfunctions.marklogic.config;
 
-import java.util.Iterator;
 import net.sf.saxon.ma.map.HashTrieMap;
 import net.sf.saxon.ma.map.KeyValuePair;
 import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.AtomicIterator;
+import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.IntegerValue;
 
 /**
@@ -40,9 +41,14 @@ public class QueryConfigurationFactory {
         QueryConfiguration config = new QueryConfiguration();
         try {
             HashTrieMap configMap = (HashTrieMap) args[1].head();
-            Iterator<KeyValuePair> iterator = configMap.iterator();
-            while (iterator.hasNext()) {
-                KeyValuePair kv = iterator.next();
+            // Saxon 9.9 compatible code, use it once 9.8 support is dropped
+            // Iterator<KeyValuePair> iterator = configMap.keyValuePairs().iterator();
+            // while (iterator.hasNext()) {
+            // KeyValuePair kv = iterator.next();
+            AtomicIterator iterator = configMap.keys();
+            AtomicValue key;
+            while ((key = iterator.next()) != null) {
+                KeyValuePair kv = configMap.getKeyValuePair(key);
                 String k = kv.key.getStringValue();
                 try {
                     switch (k) {
@@ -58,7 +64,7 @@ public class QueryConfigurationFactory {
                             break;
                     }
                 }
-                catch (XPathException | ClassCastException ex) {
+                catch (UnsupportedOperationException | ClassCastException ex) {
                     throw new XPathException("The value of the configuration property '" + k + "' is not a member of the expected datatype; see the type casting exception: " + ex.getMessage());
                 }
             }
