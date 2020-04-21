@@ -12,7 +12,8 @@ The extensions may be registered:
 They are also <a href=https://github.com/cmarchand/gaulois-pipe>gaulois-pipe</a> services. The jar just has to be in the classpath for the functions to be used with gaulois-pipe.
 
 
-The project is officially built around *Saxon 9.8* (HE/PE/EE) and XPath / XSLT 3.0.
+The project is officially built around *Saxon 9* (HE/PE/EE) from <a href=http://www.saxonica.com>Saxonica</a> and XPath / XSLT 3.0.
+Starting with version **1.3.0**, both *Saxon 9.9* and *Saxon 9.8* are supported.
 Starting with version **1.1.0**, *Saxon 9.7* is no longer supported (last compatible release: **1.0.7-97**).
 
 
@@ -117,7 +118,7 @@ let $pre:comment := $pre:comment/comment()
 The query can return node(s) (except attributes) or atomic value(s), though there might be some unsupported ones or restrictions of usage.
 
 
-## Current version (for Saxon 9.8): 1.2.0
+## Current version (for Saxon 9.9/9.8): 1.3.0
 
 Maven support:
 
@@ -125,7 +126,7 @@ Maven support:
 &lt;dependency&gt;
   &lt;groupId&gt;fr.askjadev.xml.extfunctions&lt;/groupId&gt;
   &lt;artifactId&gt;marklogic&lt;/artifactId&gt;
-  &lt;version&gt;1.2.0&lt;/version&gt;
+  &lt;version&gt;1.3.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
