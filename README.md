@@ -6,7 +6,7 @@ Extension functions for Saxon allowing XQueries to be sent to MarkLogic Server.
 
 The extensions may be registered:
 * in a Java program, by calling Saxon method <tt>registerExtensionFunction()</tt> and supplying the extension classes - for instance: <tt>configuration.registerExtensionFunction(new MarkLogicQuery());</tt>
-* through a Saxon Configuration file (<a href=http://www.saxonica.com/documentation9.7/index.html#!configuration/configuration-file>Saxon documentation</a>).
+* through a Saxon Configuration file (<a href=http://www.saxonica.com/documentation/index.html#!configuration/configuration-file>Saxon documentation</a>).
 
 
 They are also <a href=https://github.com/cmarchand/gaulois-pipe>gaulois-pipe</a> services. The jar just has to be in the classpath for the functions to be used with gaulois-pipe.
