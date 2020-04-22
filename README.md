@@ -14,9 +14,9 @@ They are also <a href=https://github.com/cmarchand/gaulois-pipe>gaulois-pipe</a>
 
 The project is officially built around *Saxon 9* (HE/PE/EE) from <a href=http://www.saxonica.com>Saxonica</a> and XPath / XSLT 3.0.
 
-Starting with version **1.3.0**, both *Saxon 9.9* and *Saxon 9.8* are supported.
+Starting with release **1.3.0**, *Saxon 9.9* is the officially supported version (last Saxon 9.8 compatible release: **1.3.0-98**).
 
-Starting with version **1.1.0**, *Saxon 9.7* is no longer supported (last compatible release: **1.0.7-97**).
+Starting with release **1.1.0**, *Saxon 9.8* is the officially supported version (last Saxon 9.7 compatible release: **1.0.7-97**).
 
 
 ## Usage
@@ -120,7 +120,7 @@ let $pre:comment := $pre:comment/comment()
 The query can return node(s) (except attributes) or atomic value(s), though there might be some unsupported ones or restrictions of usage.
 
 
-## Current version (for Saxon 9.9/9.8): 1.3.0
+## Current version: 1.3.0 (Saxon 9.9) / 1.3.0-98 (Saxon 9.8)
 
 Maven support:
 
