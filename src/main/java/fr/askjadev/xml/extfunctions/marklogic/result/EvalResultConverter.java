@@ -24,7 +24,6 @@
 package fr.askjadev.xml.extfunctions.marklogic.result;
 
 import com.marklogic.client.eval.EvalResult;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -167,7 +166,7 @@ public class EvalResultConverter {
             }
             return null;
         }
-        catch (URISyntaxException | SaxonApiException | IOException ex) {
+        catch (URISyntaxException | SaxonApiException ex) {
             throw new XPathException("Error while trying to cast (one of) the query result(s): " + ex.getMessage());
         }
     }
