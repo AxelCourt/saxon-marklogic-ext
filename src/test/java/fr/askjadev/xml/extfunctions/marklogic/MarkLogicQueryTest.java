@@ -23,7 +23,6 @@
  */
 package fr.askjadev.xml.extfunctions.marklogic;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
 import javax.xml.transform.Source;
@@ -358,11 +357,10 @@ public class MarkLogicQueryTest {
      * @throws XPathException
      * @throws TransformerConfigurationException
      * @throws URISyntaxException
-     * @throws IOException
      * @throws SaxonApiException
      */
     @Test
-    public void testXSL_ExternalVar_QueryOK() throws XPathException, TransformerConfigurationException, URISyntaxException, IOException, SaxonApiException {
+    public void testXSL_ExternalVar_QueryOK() throws XPathException, TransformerConfigurationException, URISyntaxException, SaxonApiException {
         TransformerFactory factory = TransformerFactory.newInstance();
         TransformerFactoryImpl tFactoryImpl = (TransformerFactoryImpl) factory;
         configuration.registerExtensionFunction(new MarkLogicQuery());
@@ -384,7 +382,7 @@ public class MarkLogicQueryTest {
             }
             it.close();
         }
-        catch (XPathException | TransformerConfigurationException | URISyntaxException | IOException | SaxonApiException ex) {
+        catch (XPathException | TransformerConfigurationException | URISyntaxException | SaxonApiException ex) {
             System.err.println(ex.getMessage());
             throw ex;
         }
