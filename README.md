@@ -120,7 +120,7 @@ let $pre:comment := $pre:comment/comment()
 The query can return node(s) (except attributes) or atomic value(s), though there might be some unsupported ones or restrictions of usage.
 
 
-## Current version (for Saxon 9.9/9.8): 1.3.0
+## Current version (for Saxon 9.9/9.8): 1.4.0
 
 Maven support:
 
@@ -128,7 +128,7 @@ Maven support:
 &lt;dependency&gt;
   &lt;groupId&gt;fr.askjadev.xml.extfunctions&lt;/groupId&gt;
   &lt;artifactId&gt;marklogic&lt;/artifactId&gt;
-  &lt;version&gt;1.3.0&lt;/version&gt;
+  &lt;version&gt;1.4.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
